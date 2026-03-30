@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'api.wsgi.app'
+WSGI_APPLICATION = 'socorroauto.wsgi.application'
 
 
 # Database
