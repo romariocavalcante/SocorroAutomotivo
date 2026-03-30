@@ -1,3 +1,18 @@
 {
-  "buildCommand": "python manage.py collectstatic --noinput"
+  "functions": {
+    "api/index.py": {
+      "runtime": "@vercel/python"
+    }
+  },
+  "buildCommand": "python manage.py collectstatic --noinput",
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "api/index.py"
+    }
+  ]
 }
