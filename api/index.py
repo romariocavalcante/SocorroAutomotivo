@@ -1,3 +1,4 @@
-from .wsgi import app
+import os
+from socorroauto.wsgi import application
 
-__all__ = ["app"]
+app = application
