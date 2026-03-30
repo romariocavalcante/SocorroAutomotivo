@@ -1,4 +1,6 @@
 venv
+.vercel/
+staticfiles/
 ~$oposta de Produto - AutoSocorro.docx
 Proposta de Produto - AutoSocorro.docx
 db.sqlite3

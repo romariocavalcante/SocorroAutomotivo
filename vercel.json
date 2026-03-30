@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "buildCommand": "bash build_files.sh",
+  "builds": [
+    {
+      "src": "socorroauto/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.12"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "socorroauto/wsgi.py"
+    }
+  ]
+}
