@@ -1,19 +1,15 @@
 {
-  "version": 2,
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "bash build_files.sh",
-  "builds": [
-    {
-      "src": "socorroauto/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "runtime": "python3.12"
-      }
+  "functions": {
+    "api/wsgi.py": {
+      "runtime": "python3.12"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "socorroauto/wsgi.py"
+      "source": "/(.*)",
+      "destination": "/api/wsgi.py"
     }
   ]
 }
