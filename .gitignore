@@ -6,4 +6,5 @@ Proposta de Produto - AutoSocorro.docx
 db.sqlite3
 auto/__pycache__
 auto/migrations/__pycache__
+api/__pycache__/
 socorroauto/__pycache__

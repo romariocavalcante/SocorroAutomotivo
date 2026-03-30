@@ -2,14 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "bash build_files.sh",
   "functions": {
-    "api/wsgi.py": {
+    "api/index.py": {
       "runtime": "python3.12"
     }
   },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/wsgi.py"
+      "destination": "/api/index.py"
     }
   ]
 }
