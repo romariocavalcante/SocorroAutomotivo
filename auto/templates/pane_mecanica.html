@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/servicos/servicos.css' %}">
+{% endblock %}
+{% block content %}
+<main class="servico-container">
+    <header class="servico-header">
+        <div class="servico-icon">🔧</div>
+        <h1>Assistência Mecânica 24 Horas</h1>
+        <p>Diagnóstico e reparo emergencial para qualquer tipo de problema mecânico</p>
+    </header>
+
+    <section class="servico-content">
+        <div class="servico-info">
+            <h2>Sobre o Serviço</h2>
+            <p>Nossos mecânicos experientes estão prontos para resolver problemas mecânicos em emergências. Realizamos diagnóstico completo e os reparos necessários no local ou encaminhamos para um local seguro. Disponível 24 horas, 7 dias por semana.</p>
+        </div>
+
+        <section class="beneficios">
+            <h2>Benefícios</h2>
+            <div class="beneficios-grid">
+                <article class="beneficio-card">
+                    <h3>⚡ Rápido</h3>
+                    <p>Chegada em até 15 minutos na região atendida</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🛡️ Professional</h3>
+                    <p>Mecânicos certificados com ampla experiência</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🔍 Diagnóstico</h3>
+                    <p>Identificamos o problema e oferecemos solução</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>💼 Confiável</h3>
+                    <p>Reparos com garantia de qualidade</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="servico-opcoes">
+            <h2>Serviços Disponíveis</h2>
+            <div class="opcoes-grid">
+                <div class="opcao-card">
+                    <h3>Diagnóstico Completo</h3>
+                    <p>Identificamos o problema com precisão</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Reparo de Emergência</h3>
+                    <p>Resolvemos o problema no local quando possível</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Guincho Mecânico</h3>
+                    <p>Encaminhamiento seguro para oficina se necessário</p>
+                </div>
+            </div>
+
+            <div class="servico-form">
+                <h3>Selecione o Tipo de Serviço</h3>
+                <form id="mecanica-form">
+                    <div class="form-group">
+                        <label for="tipo-mecanica">Tipo de Serviço:</label>
+                        <select id="tipo-mecanica" name="tipo-mecanica" required>
+                            <option value="">Escolher...</option>
+                            <option value="diagnostico">Diagnóstico Completo</option>
+                            <option value="reparo">Reparo de Emergência</option>
+                            <option value="guincho">Guincho Mecânico</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="resumoMecanica()" class="btn-resumo">Confirmar Seleção</button>
+                </form>
+
+                <div id="resumo-mecanica" class="resumo-servico" style="display: none;">
+                    <h4>Serviço Selecionado</h4>
+                    <p><strong>Serviço:</strong> <span id="resumo-tipo-mecanica">-</span></p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="cta-section">
+        <h2>Seu Veículo Apresenta um Problema Mecânico?</h2>
+        <a href="{% url 'solicitar_pane_mecanica' %}" class="btn btn-lg">Solicitar Assistência Mecânica</a>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    function resumoMecanica() {
+        const tipo = document.getElementById('tipo-mecanica').value;
+
+        if (!tipo) {
+            alert('Por favor, selecione um tipo de serviço');
+            return;
+        }
+
+        const tipoNome = document.getElementById('tipo-mecanica').options[document.getElementById('tipo-mecanica').selectedIndex].text;
+
+        document.getElementById('resumo-tipo-mecanica').textContent = tipoNome;
+        document.getElementById('resumo-mecanica').style.display = 'block';
+    }
+</script>
+{% endblock %}

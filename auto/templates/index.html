@@ -1,5 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/index/index.css' %}">
+{% endblock %}
 {% block content %}
-    <h1>Bem Vindo ao Socorro Automotivo !!  Essa é a página inicial do site.</h1>
+<main>
+    <header>
+        <h1>Socorro Automotivo</h1>
+        <p>Serviço de socorro automotivo 24 horas para emergências na estrada.</p>
+
+    </header>
+    <section class="map">
+        <!-- <div id="map"></div> -->
+        <!-- <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.933962951057!2d-49.88058452074561!3d-6.496899995646175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92a6400000000001%3A0x3c4b8b8b8b8b8b8b!2sCana%C3%A3%20dos%20Caraj%C3%A1s%2C%20PA!5e0!3m2!1spt-BR!2sbr!4v1699123456789!5m2!1spt-BR!2sbr"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe> -->
+    </section>
+    <section class="servicos">
+        <div class="container">
+            <h2>Escolha o tipo de serviço</h2>
+            <div class="cards-servicos">
+                <a href="{% url 'guincho' %}"><article class="card-servico">Guincho</article></a>
+                <a href="{% url 'troca_pneu' %}"><article class="card-servico">Troca de pneu</article></a>
+                <a href="{% url 'chaveiro_automotivo' %}"><article class="card-servico">Chaveiro automotivo</article></a>
+                <a href="{% url 'recarga_bateria' %}"><article class="card-servico">Recarga de Bateria</article></a>
+                <a href="{% url 'pane_mecanica' %}"><article class="card-servico">Pane Mecânica</article></a>
+                <a href="{% url 'falta_combustivel' %}"><article class="card-servico">Falta de Combustível</article></a>
+            </div>
+        </div>
+    </section>
+   
+</main>
+
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/index/index.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzt4x40uM7UU-zJb6hxszW9omyvmjswjY&libraries=maps,marker"
+    defer></script>
+
 {% endblock %}

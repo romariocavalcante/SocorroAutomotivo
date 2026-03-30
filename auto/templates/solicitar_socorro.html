@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/solicitar_socorro/solicitar_socorro.css' %}">
+{% endblock %}
+{% block content %}
+<main>
+    <header>
+        <h1>Socorro Automotivo</h1>
+        <p>{% if status == 'searching' %}Procurando socorrista mais próximo...{% else %}Preencha os detalhes abaixo para
+            solicitar assistência automotiva.{% endif %}</p>
+    </header>
+    {% if status == 'searching' %}
+    <section class="status-section">
+        <div class="status-card" id="search-card">
+            <div class="loading-spinner"></div>
+            <h2>Buscando Assistência</h2>
+            <p>Estamos localizando o socorrista mais próximo para ajudar com seu veículo.</p>
+            <div class="user-info">
+                <p><strong>Nome:</strong> {{ nome }}</p>
+                <p><strong>Localização:</strong> {{ localizacao }}</p>
+            </div>
+            <div class="map-placeholder">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.933962951057!2d-49.88058452074561!3d-6.496899995646175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92a6400000000001%3A0x3c4b8b8b8b8b8b8b!2sCana%C3%A3%20dos%20Caraj%C3%A1s%2C%20PA!5e0!3m2!1spt-BR!2sbr!4v1699123456789!5m2!1spt-BR!2sbr"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div class="map-label">mapa em tempo real</div>
+            </div>
+        </div>
+
+        <div class="status-card" id="found-card" style="display: none;">
+            <h2>Socorrista Encontrado</h2>
+            <p>Seu socorrista está a caminho! Veja os detalhes abaixo:</p>
+            <div class="driver-info">
+                <p><strong>Nome:</strong> João Silva</p>
+                <p><strong>Veículo:</strong> Kangoo 2019 (Prata)</p>
+                <p><strong>Placa:</strong> ABC-1234</p>
+                <p><strong>Tempo estimado:</strong> 8 min</p>
+            </div>
+            <div class="map-placeholder">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.933962951057!2d-49.88058452074561!3d-6.496899995646175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92a6400000000001%3A0x3c4b8b8b8b8b8b8b!2sCana%C3%A3%20dos%20Caraj%C3%A1s%2C%20PA!5e0!3m2!1spt-BR!2sbr!4v1699123456789!5m2!1spt-BR!2sbr"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div class="map-label">mapa em tempo real</div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <section class="form-section">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" required>
+            </div>
+            <div class="form-group">
+                <label for="veiculo">Tipo de Veículo:</label>
+                <select id="veiculo" name="veiculo" required>
+                    <option value="">Selecione</option>
+                    <option value="carro">Carro</option>
+                    <option value="moto">Moto</option>
+                    <option value="caminhao">Caminhão</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="localizacao">Localização Atual:</label>
+                <div class="location-group">
+                    <input type="text" id="localizacao" name="localizacao" placeholder="Endereço ou coordenadas"
+                        required>
+                    <button type="button" id="get-location" class="btn-location">📍 Obter Localização</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="problema">Descrição do Problema:</label>
+                <textarea id="problema" name="problema" rows="4" required></textarea>
+            </div>
+            <div class="actions">
+                <button type="button" class="btn-secondary" onclick="window.location.href='{{ request.META.HTTP_REFERER|default:'/' }}'">Voltar</button>
+                <button type="submit" class="btn-submit">Enviar Solicitação</button>
+            </div>
+        </form>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    document.getElementById('get-location').addEventListener('click', function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                document.getElementById('localizacao').value = `${lat}, ${lon}`;
+            }, function (error) {
+                alert('Erro ao obter localização: ' + error.message);
+            });
+        } else {
+            alert('Geolocalização não é suportada pelo seu navegador.');
+        }
+    });
+
+    // Simula transição de Pesquisando -> Encontrado
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchCard = document.getElementById('search-card');
+        const foundCard = document.getElementById('found-card');
+        if (searchCard && foundCard) {
+            setTimeout(function() {
+                searchCard.style.display = 'none';
+                foundCard.style.display = 'block';
+                document.querySelector('.status-card h2').innerText = 'Socorrista Encontrado';
+            }, 3000);
+        }
+    });
+</script>
+{% endblock %}

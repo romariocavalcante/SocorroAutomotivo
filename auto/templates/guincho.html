@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/servicos/servicos.css' %}">
+{% endblock %}
+{% block content %}
+<main class="servico-container">
+    <header class="servico-header">
+        <div class="servico-icon">🚗</div>
+        <h1>Guincho 24 Horas</h1>
+        <p>Remoção rápida e segura para seus veículos em qualquer situação de emergência</p>
+    </header>
+
+    <section class="servico-content">
+        <div class="servico-info">
+            <h2>Sobre o Serviço</h2>
+            <p>Contamos com a melhor frota de guinches equipados e profissionais experientes para transportar seu veículo com total segurança, independente da situação. Disponível 24 horas, 7 dias por semana.</p>
+        </div>
+
+        <section class="beneficios">
+            <h2>Benefícios</h2>
+            <div class="beneficios-grid">
+                <article class="beneficio-card">
+                    <h3>⚡ Rápido</h3>
+                    <p>Chegada em até 15 minutos na região atendida</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🛡️ Seguro</h3>
+                    <p>Profissionais especialistas em transporte seguro de veículos</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>💼 Profissional</h3>
+                    <p>Equipe treinada com equipamentos modernos</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🌍 Cobertura</h3>
+                    <p>Atendimento em toda a região metropolitana</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="servico-opcoes">
+            <h2>Tipos de Guincho Disponíveis</h2>
+            <div class="opcoes-grid">
+                <div class="opcao-card">
+                    <h3>Guincho Munk</h3>
+                    <p>Para veículos leves e médios com sistema de elevação lateral</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Guincho Convencional</h3>
+                    <p>Reboque completo para todos os tipos de veículos</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Plataforma Baixa</h3>
+                    <p>Para carros esportivos e baixos sem danificar a pintura</p>
+                </div>
+            </div>
+
+            <div class="servico-form">
+                <h3>Selecione o Tipo de Guincho</h3>
+                <form id="guincho-form">
+                    <div class="form-group">
+                        <label for="tipo-guincho">Tipo de Guincho:</label>
+                        <select id="tipo-guincho" name="tipo-guincho" required>
+                            <option value="">Escolher...</option>
+                            <option value="munk">Guincho Munk</option>
+                            <option value="convencional">Guincho Convencional</option>
+                            <option value="plataforma">Plataforma Baixa</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="resumoGuincho()" class="btn-resumo">Confirmar Seleção</button>
+                </form>
+
+                <div id="resumo-guincho" class="resumo-servico" style="display: none;">
+                    <h4>Tipo Selecionado</h4>
+                    <p><strong>Guincho:</strong> <span id="resumo-tipo-guincho">-</span></p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="cta-section">
+        <h2>Precisa de Guincho Agora?</h2>
+        <a href="{% url 'solicitar_guincho' %}" class="btn btn-lg">Solicitar Guincho Agora</a>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    function resumoGuincho() {
+        const tipo = document.getElementById('tipo-guincho').value;
+
+        if (!tipo) {
+            alert('Por favor, selecione um tipo de guincho');
+            return;
+        }
+
+        const tipoNome = document.getElementById('tipo-guincho').options[document.getElementById('tipo-guincho').selectedIndex].text;
+
+        document.getElementById('resumo-tipo-guincho').textContent = tipoNome;
+        document.getElementById('resumo-guincho').style.display = 'block';
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,7 @@
+venv
+~$oposta de Produto - AutoSocorro.docx
+Proposta de Produto - AutoSocorro.docx
+db.sqlite3
+auto/__pycache__
+auto/migrations/__pycache__
+socorroauto/__pycache__

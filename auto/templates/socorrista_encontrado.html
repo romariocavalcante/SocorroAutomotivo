@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/solicitar_socorro/solicitar_socorro.css' %}">
+{% endblock %}
+{% block content %}
+<main>
+    <header>
+        <h1>Socorrista Encontrado</h1>
+        <p>Seu pedido foi recebido e um profissional já está a caminho.</p>
+    </header>
+    <section class="status-section">
+        <div class="status-card">
+            <h2>🚗 A caminho</h2>
+            <p>Detalhes do socorrista mais próximo:</p>
+            <div class="driver-info">
+                <p><strong>Nome:</strong> João Silva</p>
+                <p><strong>Veículo:</strong> Kangoo 2019 (Prata)</p>
+                <p><strong>Placa:</strong> ABC-1234</p>
+                <p><strong>Tempo estimado de chegada:</strong> 6 min</p>
+            </div>
+            <div class="map-placeholder">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.933962951057!2d-49.88058452074561!3d-6.496899995646175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92a6400000000001%3A0x3c4b8b8b8b8b8b8b!2sCana%C3%A3%20dos%20Caraj%C3%A1s%2C%20PA!5e0!3m2!1spt-BR!2sbr!4v1699123456789!5m2!1spt-BR!2sbr"
+                    width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div class="map-label">mapa em tempo real</div>
+            </div>
+            <div class="btn-row">
+                <a href="{% url 'index' %}" class="btn-secondary">Início</a>
+                <a href="{% url 'solicitar_socorro' %}" class="btn-submit">Nova Solicitação</a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

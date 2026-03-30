@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/servicos/servicos.css' %}">
+{% endblock %}
+{% block content %}
+<main class="servico-container">
+    <header class="servico-header">
+        <div class="servico-icon">🔐</div>
+        <h1>Chaveiro Automotivo 24 Horas</h1>
+        <p>Destrancamento profissional e seguro para qualquer tipo de veículo</p>
+    </header>
+
+    <section class="servico-content">
+        <div class="servico-info">
+            <h2>Sobre o Serviço</h2>
+            <p>Nossos chaveiros especializados em veículos estão prontos para ajudar em situações de emergência. Contamos com tecnologia de ponta para abrir seu veículo sem danificar a pintura ou fechaduras. Atendimento rápido e profissional 24 horas, 7 dias por semana.</p>
+        </div>
+
+        <section class="beneficios">
+            <h2>Benefícios</h2>
+            <div class="beneficios-grid">
+                <article class="beneficio-card">
+                    <h3>⚡ Rápido</h3>
+                    <p>Chegada em até 15 minutos na região atendida</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🛡️ Seguro</h3>
+                    <p>Profissionais especializados sem danificar seu veículo</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🔧 Tecnologia</h3>
+                    <p>Equipamento moderno e técnicas seguras</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>💼 Discreto</h3>
+                    <p>Serviço profissional e confidencial</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="servico-opcoes">
+            <h2>Serviços Disponíveis</h2>
+            <div class="opcoes-grid">
+                <div class="opcao-card">
+                    <h3>Abertura de Porta</h3>
+                    <p>Destrancamento rápido e sem danificar seu veículo</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Problema de Ignição</h3>
+                    <p>Tranca travada ou problema na ignição resolvido</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Chave Perdida</h3>
+                    <p>Abertura com segurança em caso de chave perdida</p>
+                </div>
+            </div>
+
+            <div class="servico-form">
+                <h3>Selecione o Tipo de Serviço</h3>
+                <form id="chaveiro-form">
+                    <div class="form-group">
+                        <label for="tipo-chaveiro">Tipo de Serviço:</label>
+                        <select id="tipo-chaveiro" name="tipo-chaveiro" required>
+                            <option value="">Escolher...</option>
+                            <option value="abertura-porta">Abertura de Porta</option>
+                            <option value="ignição">Problema de Ignição</option>
+                            <option value="chave-perdida">Chave Perdida</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="resumoChaveiro()" class="btn-resumo">Confirmar Seleção</button>
+                </form>
+
+                <div id="resumo-chaveiro" class="resumo-servico" style="display: none;">
+                    <h4>Serviço Selecionado</h4>
+                    <p><strong>Serviço:</strong> <span id="resumo-tipo-chaveiro">-</span></p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="cta-section">
+        <h2>Chave Travada? Sem Acesso ao Veículo?</h2>
+        <a href="{% url 'solicitar_chaveiro_automotivo' %}" class="btn btn-lg">Solicitar Chaveiro</a>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    function resumoChaveiro() {
+        const tipo = document.getElementById('tipo-chaveiro').value;
+
+        if (!tipo) {
+            alert('Por favor, selecione um tipo de serviço');
+            return;
+        }
+
+        const tipoNome = document.getElementById('tipo-chaveiro').options[document.getElementById('tipo-chaveiro').selectedIndex].text;
+
+        document.getElementById('resumo-tipo-chaveiro').textContent = tipoNome;
+        document.getElementById('resumo-chaveiro').style.display = 'block';
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/servicos/servicos.css' %}">
+{% endblock %}
+{% block content %}
+<main class="servico-container">
+    <header class="servico-header">
+        <div class="servico-icon">⛽</div>
+        <h1>Entrega de Combustível 24 Horas</h1>
+        <p>Combustível entregue na sua localização em tempo recorde</p>
+    </header>
+
+    <section class="servico-content">
+        <div class="servico-info">
+            <h2>Sobre o Serviço</h2>
+            <p>Ficou sem combustível na estrada? Nossa equipe está pronta para entregar o combustível que você precisa diretamente no seu veículo. Temos gasolina comum, aditivada e diesel. Serviço disponível 24 horas, 7 dias por semana em toda a região atendida.</p>
+        </div>
+
+        <section class="beneficios">
+            <h2>Benefícios</h2>
+            <div class="beneficios-grid">
+                <article class="beneficio-card">
+                    <h3>⚡ Rápido</h3>
+                    <p>Chegada em até 15 minutos na região atendida</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🛡️ Seguro</h3>
+                    <p>Combustível de qualidade com manipulação segura</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>💳 Fácil Pagamento</h3>
+                    <p>Aceitamos dinheiro, débito e crédito</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🚗 Sem Movimentar</h3>
+                    <p>Você não precisa se deslocar, nós vamos até você</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="servico-opcoes">
+            <h2>Combustíveis Disponíveis</h2>
+            <div class="opcoes-grid">
+                <div class="opcao-card">
+                    <h3>Gasolina Comum</h3>
+                    <p>Combustível padrão para a maioria dos veículos</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Gasolina Aditivada</h3>
+                    <p>Combustível premium com aditivos especiais</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Diesel</h3>
+                    <p>Combustível para veículos diesel e caminhões</p>
+                </div>
+            </div>
+
+            <div class="combustivel-form">
+                <h3>Selecione o Combustível Desejado</h3>
+                <form id="combustivel-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipo-combustivel">Tipo de Combustível:</label>
+                            <select id="tipo-combustivel" name="tipo-combustivel" required>
+                                <option value="">Escolher...</option>
+                                <option value="gasolina-comum">Gasolina Comum</option>
+                                <option value="gasolina-aditivada">Gasolina Aditivada</option>
+                                <option value="diesel">Diesel</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Unidade de Medida:</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="unidade" value="litros" checked> Litros
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="unidade" value="reais"> Reais (R$)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantidade">Quantidade:</label>
+                            <div class="quantidade-input">
+                                <input type="number" id="quantidade" name="quantidade" min="0.5" step="0.1" placeholder="Ex: 10" required>
+                                <span id="unidade-label">L</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="resumoCombustivel()" class="btn-resumo">Confirmar Seleção</button>
+                </form>
+
+                <div id="resumo-combustivel" class="resumo-combustivel" style="display: none;">
+                    <h4>Resumo do Pedido</h4>
+                    <p><strong>Tipo:</strong> <span id="resumo-tipo">-</span></p>
+                    <p><strong>Quantidade:</strong> <span id="resumo-quantidade">-</span> <span id="resumo-unidade">-</span></p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="cta-section">
+        <h2>Ficou Sem Combustível?</h2>
+        <a href="{% url 'solicitar_falta_combustivel' %}" class="btn btn-lg">Solicitar Combustível Agora</a>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    // Atualizar label da unidade quando mudar a seleção
+    const radios = document.querySelectorAll('input[name="unidade"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const unidadeLabel = document.getElementById('unidade-label');
+            if (this.value === 'litros') {
+                unidadeLabel.textContent = 'L';
+            } else {
+                unidadeLabel.textContent = 'R$';
+            }
+        });
+    });
+
+    // Função para mostrar resumo do combustível
+    function resumoCombustivel() {
+        const tipo = document.getElementById('tipo-combustivel').value;
+        const quantidade = document.getElementById('quantidade').value;
+        const unidade = document.querySelector('input[name="unidade"]:checked').value;
+
+        if (!tipo || !quantidade) {
+            alert('Por favor, preencha todos os campos');
+            return;
+        }
+
+        const tipoNome = document.getElementById('tipo-combustivel').options[document.getElementById('tipo-combustivel').selectedIndex].text;
+        const unidadeNome = unidade === 'litros' ? 'Litros' : 'Reais';
+        const unidadeSigla = unidade === 'litros' ? 'L' : 'R$';
+
+        document.getElementById('resumo-tipo').textContent = tipoNome;
+        document.getElementById('resumo-quantidade').textContent = quantidade;
+        document.getElementById('resumo-unidade').textContent = unidadeSigla;
+        
+        document.getElementById('resumo-combustivel').style.display = 'block';
+    }
+</script>
+{% endblock %}

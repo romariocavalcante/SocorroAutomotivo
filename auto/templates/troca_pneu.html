@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/servicos/servicos.css' %}">
+{% endblock %}
+{% block content %}
+<main class="servico-container">
+    <header class="servico-header">
+        <div class="servico-icon">🛞</div>
+        <h1>Troca de Pneu 24 Horas</h1>
+        <p>Serviço profissional de troca de pneu em qualquer local e a qualquer hora</p>
+    </header>
+
+    <section class="servico-content">
+        <div class="servico-info">
+            <h2>Sobre o Serviço</h2>
+            <p>Contamos com profissionais especializados em troca de pneus com equipamento de segurança completo. Somos rápidos, eficientes e dispomos de várias opções de pneus para emergências. Atendimento garantido em até 15 minutos na região atendida.</p>
+        </div>
+
+        <section class="beneficios">
+            <h2>Benefícios</h2>
+            <div class="beneficios-grid">
+                <article class="beneficio-card">
+                    <h3>⚡ Rápido</h3>
+                    <p>Chegada em até 15 minutos na região atendida</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🛡️ Seguro</h3>
+                    <p>Profissionais treinados com equipamento de proteção</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🔧 Completo</h3>
+                    <p>Temos pneus de emergência para atender sua necessidade</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>💼 Profissional</h3>
+                    <p>Serviço com garantia de qualidade e segurança</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="servico-opcoes">
+            <h2>Serviços Disponíveis</h2>
+            <div class="opcoes-grid">
+                <div class="opcao-card">
+                    <h3>Troca Simples</h3>
+                    <p>Troca rápida do pneu furado ou danificado</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Pneu de Emergência</h3>
+                    <p>Fornecemos pneu de qualidade para você chegar ao destino</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Balanceamento</h3>
+                    <p>Equilibramos o pneu para melhor dirigibilidade</p>
+                </div>
+            </div>
+
+            <div class="servico-form">
+                <h3>Selecione o Serviço de Pneu</h3>
+                <form id="pneu-form">
+                    <div class="form-group">
+                        <label for="tipo-pneu">Tipo de Serviço:</label>
+                        <select id="tipo-pneu" name="tipo-pneu" required>
+                            <option value="">Escolher...</option>
+                            <option value="troca-simples">Troca Simples</option>
+                            <option value="pneu-emergencia">Pneu de Emergência</option>
+                            <option value="balanceamento">Balanceamento</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="resumoPneu()" class="btn-resumo">Confirmar Seleção</button>
+                </form>
+
+                <div id="resumo-pneu" class="resumo-servico" style="display: none;">
+                    <h4>Serviço Selecionado</h4>
+                    <p><strong>Serviço:</strong> <span id="resumo-tipo-pneu">-</span></p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="cta-section">
+        <h2>Precisa Trocar um Pneu?</h2>
+        <a href="{% url 'solicitar_troca_pneu' %}" class="btn btn-lg">Solicitar Troca de Pneu</a>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    function resumoPneu() {
+        const tipo = document.getElementById('tipo-pneu').value;
+
+        if (!tipo) {
+            alert('Por favor, selecione um tipo de serviço');
+            return;
+        }
+
+        const tipoNome = document.getElementById('tipo-pneu').options[document.getElementById('tipo-pneu').selectedIndex].text;
+
+        document.getElementById('resumo-tipo-pneu').textContent = tipoNome;
+        document.getElementById('resumo-pneu').style.display = 'block';
+    }
+</script>
+{% endblock %}

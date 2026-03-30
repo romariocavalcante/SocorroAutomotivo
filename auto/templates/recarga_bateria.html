@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- CSS -->
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/servicos/servicos.css' %}">
+{% endblock %}
+{% block content %}
+<main class="servico-container">
+    <header class="servico-header">
+        <div class="servico-icon">🔋</div>
+        <h1>Recarga de Bateria 24 Horas</h1>
+        <p>Serviço de recarga e substituição de bateria onde você estiver</p>
+    </header>
+
+    <section class="servico-content">
+        <div class="servico-info">
+            <h2>Sobre o Serviço</h2>
+            <p>Veículo não liga? Nossa equipe especializada está pronta para resolver seu problema de bateria. Oferecemos recarga rápida no local ou substituição por bateria de qualidade. Disponível 24 horas, 7 dias por semana, em toda a região atendida.</p>
+        </div>
+
+        <section class="beneficios">
+            <h2>Benefícios</h2>
+            <div class="beneficios-grid">
+                <article class="beneficio-card">
+                    <h3>⚡ Rápido</h3>
+                    <p>Recarga em minutos ou substituição imediata</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🛡️ Seguro</h3>
+                    <p>Profissionais qualificados com equipamento de segurança</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>🔧 Completo</h3>
+                    <p>Temos baterias de qualidade para todos os veículos</p>
+                </article>
+                <article class="beneficio-card">
+                    <h3>💼 Profissional</h3>
+                    <p>Diagnóstico e solução garantida no local</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="servico-opcoes">
+            <h2>Serviços Disponíveis</h2>
+            <div class="opcoes-grid">
+                <div class="opcao-card">
+                    <h3>Recarga Rápida</h3>
+                    <p>Recarregamos sua bateria para você continuar a jornada</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Substituição</h3>
+                    <p>Bateria danificada? Trocamos por uma nova no ato</p>
+                </div>
+                <div class="opcao-card">
+                    <h3>Diagnóstico</h3>
+                    <p>Verificamos se o problema é realmente na bateria</p>
+                </div>
+            </div>
+
+            <div class="servico-form">
+                <h3>Selecione o Tipo de Serviço</h3>
+                <form id="bateria-form">
+                    <div class="form-group">
+                        <label for="tipo-bateria">Tipo de Serviço:</label>
+                        <select id="tipo-bateria" name="tipo-bateria" required>
+                            <option value="">Escolher...</option>
+                            <option value="recarga-rapida">Recarga Rápida</option>
+                            <option value="substituição">Substituição</option>
+                            <option value="diagnostico">Diagnóstico</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="resumoBateria()" class="btn-resumo">Confirmar Seleção</button>
+                </form>
+
+                <div id="resumo-bateria" class="resumo-servico" style="display: none;">
+                    <h4>Serviço Selecionado</h4>
+                    <p><strong>Serviço:</strong> <span id="resumo-tipo-bateria">-</span></p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="cta-section">
+        <h2>Carro Não Liga? Bateria Fraca?</h2>
+        <a href="{% url 'solicitar_recarga_bateria' %}" class="btn btn-lg">Solicitar Recarga de Bateria</a>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    function resumoBateria() {
+        const tipo = document.getElementById('tipo-bateria').value;
+
+        if (!tipo) {
+            alert('Por favor, selecione um tipo de serviço');
+            return;
+        }
+
+        const tipoNome = document.getElementById('tipo-bateria').options[document.getElementById('tipo-bateria').selectedIndex].text;
+
+        document.getElementById('resumo-tipo-bateria').textContent = tipoNome;
+        document.getElementById('resumo-bateria').style.display = 'block';
+    }
+</script>
+{% endblock %}
